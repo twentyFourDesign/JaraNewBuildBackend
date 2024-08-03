@@ -21,6 +21,10 @@ app.use(morgan("dev"));
 app.use(errorMiddleware); // CUSTOM ERROR MIDDLEWARE
 app.use("/api/v1", allRoutes); // ALL API END POINTS
 
+app.get("/", function (req, res) {
+  return res.send("Hello World");
+ });
+
 // INAVLID API CALL
 app.use((req, res, next) => {
   next(new ErrorResponse("Invalid Api", statusCode?.notFound));
