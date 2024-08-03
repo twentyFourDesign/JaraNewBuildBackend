@@ -43,4 +43,4 @@ jobs:
           cd ~/JaraNewBuildBackend
           git pull origin ci
           npm install --production
-          pm2 restart node-app
+          pm2 restart jara-beach-api-prod  
