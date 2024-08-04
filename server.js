@@ -27,9 +27,10 @@ app.use((req, res, next) => {
   next(new ErrorResponse("Invalid Api", statusCode?.notFound));
 });
 
-app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'OK', message: 'Application is running smoothly' });
-});
+
+app.get("/health", function (req, res) {
+  return res.send("Server Opeartion Success");
+ });
 
 app.listen(port, () => {
   console.log(`server is running on PORT ${port}`);
