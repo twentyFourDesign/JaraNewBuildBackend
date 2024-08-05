@@ -1,11 +1,14 @@
-const { createBooking, getAllBooking } = require('../services/overnight.booking.service')
+const {
+  createBooking,
+  getAllBooking,
+  getBookingByRef,
+} = require("../services/overnight.booking.service");
 
-const router = require ('express').Router()
+const router = require("express").Router();
 
+const upload = require("../middlewares/fileupload/upload.middleware");
+router.post(`/create`, upload.single("file"), createBooking);
+router.get(`/get/all`, getAllBooking);
+router.get(`/get/:ref`, getBookingByRef);
 
-router.post(`/create`,createBooking)
-router.get(`/get/all`,getAllBooking)
-
-
-
-module.exports = router
+module.exports = router;
