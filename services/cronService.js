@@ -1,6 +1,7 @@
 const cron = require("node-cron");
 const { paymentModel } = require("../models");
 const { sendEmail } = require("../config/mail.config");
+const { SubRooms } = require("../models/rooms.schema");
 
 cron.schedule("0 * * * *", async () => {
   const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
@@ -12,6 +13,13 @@ cron.schedule("0 * * * *", async () => {
   for (const payment of pendingPayments) {
     const guestDetails = JSON.parse(payment.guestDetails);
     const roomDetails = JSON.parse(payment.roomDetails);
+    if (roomDetails.selectedRooms) {
+      for (const room of roomDetails.selectedRooms) {
+        await SubRooms.findByIdAndUpdate(room.id, {
+          $inc: { availableRoom: room.quantity },
+        });
+      }
+    }
     payment.status = "Cancelled";
     await payment.save();
     const emailContext = {
