@@ -20,14 +20,26 @@ app.use(express.json());
 
 app.use(cors({ origin: "*" }));
 app.use(morgan("dev"));
+
+app.use(errorMiddleware); // CUSTOM ERROR MIDDLEWARE
+
+app.get("/health", function (req, res) {
+  return res.send("Server Operation Success");
+ });
+
+
 app.use(errorMiddleware);
 app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // CUSTOM ERROR MIDDLEWARE
+
 app.use("/api/v1", allRoutes); // ALL API END POINTS
+
 
 // INAVLID API CALL
 app.use((req, res, next) => {
   next(new ErrorResponse("Invalid Api", statusCode?.notFound));
 });
+
+
 
 app.listen(port, () => {
   console.log(`server is running on PORT ${port}`);
