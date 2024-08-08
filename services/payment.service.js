@@ -143,7 +143,6 @@ const cancel = asyncErrorHandler(async (req, res) => {
         });
       }
     }
-
     payment.status = "Cancelled";
     await payment.save();
     res.status(statusCode.accepted).json(payment);
