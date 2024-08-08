@@ -31,17 +31,24 @@ jobs:
   deploy:
     needs: [test]
     runs-on: ubuntu-latest
-
     steps:
-    - name: SSH and deploy node app
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USERNAME }}
-        key: ${{ secrets.SSH_KEY }}
-        port: ${{ secrets.SSH_PORT }}
-        script: |
-          cd ~/JaraNewBuildBackend
-          git pull origin ci
-          npm install --production
-          pm2 restart jara-beach-api-prod  
+      - name: SSH and deploy node app
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd ~/JaraNewBuildBackend
+            echo "MONGOURL=${{ secrets.MONGOURL }}" >> .env
+            echo "PORT=${{ secrets.PORT }}" >> .env
+            echo "JWTKEY=${{ secrets.JWTKEY }}" >> .env
+            echo "PAYSTACK_SECRET_KEY=${{ secrets.PAYSTACK_SECRET_KEY }}" >> .env
+            echo "EMAIL_USER=${{ secrets.EMAIL_USER }}" >> .env
+            echo "EMAIL_PASS=${{ secrets.EMAIL_PASS }}" >> .env
+            git pull origin ci
+            npm install --production
+            pm2 restart jara-beach-api-prod  
+
+
