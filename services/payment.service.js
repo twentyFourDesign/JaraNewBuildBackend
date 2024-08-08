@@ -24,9 +24,13 @@ const create = asyncErrorHandler(async (req, res) => {
       numberOfGuests: `${
         roomDetails?.selectedRooms?.[0]?.guestCount?.adults ||
         roomDetails?.adultsCount
+          ? roomDetails?.adultsCount
+          : "0"
       } Adults, ${
         roomDetails?.selectedRooms?.[0]?.guestCount?.children ||
         roomDetails?.childrenCount
+          ? roomDetails?.childrenCount
+          : "0"
       } Children`,
       numberOfNights: roomDetails?.visitDate
         ? Math.round(
@@ -102,9 +106,13 @@ const confirm = asyncErrorHandler(async (req, res) => {
       numberOfGuests: `${
         roomDetails?.selectedRooms?.[0]?.guestCount?.adults ||
         roomDetails?.adultsCount
+          ? roomDetails?.adultsCount
+          : "0"
       } Adults, ${
         roomDetails?.selectedRooms?.[0]?.guestCount?.children ||
         roomDetails?.childrenCount
+          ? roomDetails?.childrenCount
+          : "0"
       } Children`,
       numberOfNights: roomDetails?.visitDate
         ? Math.round(
@@ -143,7 +151,6 @@ const cancel = asyncErrorHandler(async (req, res) => {
         });
       }
     }
-
     payment.status = "Cancelled";
     await payment.save();
     res.status(statusCode.accepted).json(payment);
@@ -158,9 +165,13 @@ const cancel = asyncErrorHandler(async (req, res) => {
       numberOfGuests: `${
         roomDetails?.selectedRooms?.[0]?.guestCount?.adults ||
         roomDetails?.adultsCount
+          ? roomDetails?.adultsCount
+          : "0"
       } Adults, ${
         roomDetails?.selectedRooms?.[0]?.guestCount?.children ||
         roomDetails?.childrenCount
+          ? roomDetails?.childrenCount
+          : "0"
       } Children`,
       numberOfNights: roomDetails?.visitDate
         ? Math.round(
