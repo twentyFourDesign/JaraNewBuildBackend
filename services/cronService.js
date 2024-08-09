@@ -30,15 +30,13 @@ cron.schedule("0 * * * *", async () => {
       checkIn: roomDetails?.visitDate || roomDetails?.startDate,
       checkOut: roomDetails?.endDate || roomDetails?.startDate,
       numberOfGuests: `${
-        roomDetails?.selectedRooms?.[0]?.guestCount?.adults ||
-        roomDetails?.adultsCount
-          ? roomDetails?.adultsCount
-          : "0"
+        roomDetails?.selectedRooms?.[0]?.guestCount?.adults ??
+        roomDetails?.adultsCount ??
+        0
       } Adults, ${
-        roomDetails?.selectedRooms?.[0]?.guestCount?.children ||
-        roomDetails?.childrenCount
-          ? roomDetails?.childrenCount
-          : "0"
+        roomDetails?.selectedRooms?.[0]?.guestCount?.children ??
+        roomDetails?.childrenCount ??
+        0
       } Children`,
       numberOfNights: roomDetails?.visitDate
         ? Math.round(
