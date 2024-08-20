@@ -81,6 +81,15 @@ const getSingle = asyncErrorHandler(async (req, res) => {
     throw new ErrorResponse("No Daypass Booking Found", 404);
   }
 });
+const getByBookingId = asyncErrorHandler(async (req, res) => {
+  const { id } = req.params;
+  let daypass = await paymentModel.find({ ref: id });
+  if (daypass) {
+    res.status(statusCode.accepted).json(daypass);
+  } else {
+    throw new ErrorResponse("No Payment Found", 404);
+  }
+});
 
 const confirm = asyncErrorHandler(async (req, res) => {
   const { ref } = req.params;
@@ -191,4 +200,4 @@ const cancel = asyncErrorHandler(async (req, res) => {
     throw new ErrorResponse("Booking Not Found", 404);
   }
 });
-module.exports = { create, getAll, getSingle, confirm, cancel };
+module.exports = { create, getAll, getByBookingId, getSingle, confirm, cancel };

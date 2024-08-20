@@ -80,8 +80,18 @@ const getAllSubRoom2 = asyncErrorHandler(async (req, res) => {
       });
     }
   });
-
-  res.status(200).json(allRooms);
+  const availableRooms = allRooms.filter((room) => room.availableRoom > 0);
+  res.status(200).json(availableRooms);
+});
+const getBookingsForRoom = asyncErrorHandler(async (req, res) => {
+  const { roomId } = req.params;
+  const bookings = await overnightBooking.find({
+    "bookingDetails.selectedRooms.id": roomId,
+  });
+  if (!bookings) {
+    return res.status(404).json({ error: "Bookings not found" });
+  }
+  res.status(200).json(bookings);
 });
 
 module.exports = {
@@ -94,4 +104,5 @@ module.exports = {
   deleteSubRoom,
   getAllSubRoom,
   getAllSubRoom2,
+  getBookingsForRoom,
 };
