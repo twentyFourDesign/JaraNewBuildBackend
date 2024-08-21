@@ -12,6 +12,8 @@ const paymentSchema = mongoose.Schema(
     subTotal: { type: String },
     vat: { type: String },
     totalCost: { type: String },
+    discount: { type: Number },
+    voucher: { type: Number },
   },
   { timestamps: true }
 );

@@ -50,8 +50,8 @@ cron.schedule("0 * * * *", async () => {
               )
             : "Day Pass",
           subTotal: payment.subTotal,
-          multiNightDiscount: "₦0",
-          clubMemberDiscount: "₦0",
+          multiNightDiscount: payment.discount,
+          clubMemberDiscount: payment.voucher,
           vat: payment.vat,
           totalCost: payment.totalCost,
         };
