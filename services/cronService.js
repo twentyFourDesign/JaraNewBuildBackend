@@ -2,7 +2,7 @@ const cron = require("node-cron");
 const { paymentModel } = require("../models");
 const { sendEmail } = require("../config/mail.config");
 const { SubRooms } = require("../models/rooms.schema");
-
+const { voucherModel } = require("../models");
 cron.schedule("0 * * * *", async () => {
   try {
     const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
@@ -68,3 +68,20 @@ cron.schedule("0 * * * *", async () => {
     console.log("failed to cancel");
   }
 });
+
+// Function to update expired vouchers
+const updateExpiredVouchers = async () => {
+  try {
+    const now = new Date();
+    await voucherModel.updateMany(
+      { expireAt: { $lt: now }, status: "active" },
+      { $set: { status: "expired" } }
+    );
+    console.log("Expired vouchers updated successfully");
+  } catch (error) {
+    console.error("Error updating expired vouchers:", error);
+  }
+};
+
+// Schedule the task to run daily at midnight
+cron.schedule("0 0 * * *", updateExpiredVouchers);
