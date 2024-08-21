@@ -39,8 +39,8 @@ const create = asyncErrorHandler(async (req, res) => {
           )
         : "Day Pass",
       subTotal: req.body.subTotal,
-      multiNightDiscount: "₦0",
-      clubMemberDiscount: "₦0",
+      multiNightDiscount: req.body.discount,
+      clubMemberDiscount: req.body.voucher,
       vat: req.body.vat,
       totalCost: req.body.totalCost,
     };
@@ -128,8 +128,8 @@ const confirm = asyncErrorHandler(async (req, res) => {
           )
         : "Day Pass",
       subTotal: payment.subTotal,
-      multiNightDiscount: "₦0",
-      clubMemberDiscount: "₦0",
+      multiNightDiscount: payment.discount,
+      clubMemberDiscount: payment.voucher,
       vat: payment.vat,
       totalCost: payment.totalCost,
     };
@@ -185,8 +185,8 @@ const cancel = asyncErrorHandler(async (req, res) => {
           )
         : "Day Pass",
       subTotal: payment.subTotal,
-      multiNightDiscount: "₦0",
-      clubMemberDiscount: "₦0",
+      multiNightDiscount: payment.discount,
+      clubMemberDiscount: payment.voucher,
       vat: payment.vat,
       totalCost: payment.totalCost,
     };

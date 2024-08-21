@@ -54,13 +54,14 @@
         <p>Number of Guests: {{numberOfGuests}}</p>
         <p>Number of Nights: {{numberOfNights}}</p>
         <p>Sub Total: ₦{{subTotal}}</p>
-        <p>Multi-night discount applied - saving ₦{{multiNightDiscount}}</p>
-        <p>100 Club Member discount applied - saving ₦{{clubMemberDiscount}}</p>
+        <p>Discount applied - saving {{multiNightDiscount}}%</p>
+        <p>Voucher remaining balance - ₦{{clubMemberDiscount}}</p>
         <p>VAT and Consumption Tax (12.5%): ₦{{vat}}</p>
         <p>Total Cost (PAYABLE): ₦{{totalCost}}</p>
 
         <p>
-          To complete your reservation, kindly make the payment of ₦656,100 to:
+          To complete your reservation, kindly make the payment of
+          ₦{{totalCost}} to:
         </p>
         <p>LITTLE COMPANY NIGERIA LIMITED</p>
         <p>Access Bank: 0813609546</p>

@@ -3,6 +3,7 @@ const { paymentModel } = require("../models");
 const { sendEmail } = require("../config/mail.config");
 const { SubRooms } = require("../models/rooms.schema");
 const { voucherModel } = require("../models");
+const { dayPassVouherModel } = require("../models");
 cron.schedule("0 * * * *", async () => {
   try {
     const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
@@ -49,8 +50,8 @@ cron.schedule("0 * * * *", async () => {
               )
             : "Day Pass",
           subTotal: payment.subTotal,
-          multiNightDiscount: "₦0",
-          clubMemberDiscount: "₦0",
+          multiNightDiscount: payment.discount,
+          clubMemberDiscount: payment.voucher,
           vat: payment.vat,
           totalCost: payment.totalCost,
         };
@@ -74,7 +75,21 @@ const updateExpiredVouchers = async () => {
   try {
     const now = new Date();
     await voucherModel.updateMany(
-      { expireAt: { $lt: now }, status: "active" },
+      {
+        $or: [
+          { expireAt: { $lt: now }, status: "active" },
+          { expireAt: { $lt: now }, status: "Active" },
+        ],
+      },
+      { $set: { status: "expired" } }
+    );
+    await dayPassVouherModel.updateMany(
+      {
+        $or: [
+          { expireAt: { $lt: now }, status: "active" },
+          { expireAt: { $lt: now }, status: "Active" },
+        ],
+      },
       { $set: { status: "expired" } }
     );
     console.log("Expired vouchers updated successfully");
