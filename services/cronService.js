@@ -52,6 +52,9 @@ cron.schedule("0 * * * *", async () => {
           subTotal: payment.subTotal,
           multiNightDiscount: payment.discount,
           clubMemberDiscount: payment.voucher,
+          multiNightDiscountAvailable: payment.multiNightDiscount
+            ? payment.multiNightDiscount
+            : 0,
           vat: payment.vat,
           totalCost: payment.totalCost,
         };

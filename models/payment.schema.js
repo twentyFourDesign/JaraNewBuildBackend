@@ -14,6 +14,7 @@ const paymentSchema = mongoose.Schema(
     totalCost: { type: String },
     discount: { type: Number },
     voucher: { type: Number },
+    multiNightDiscount: { type: Number },
   },
   { timestamps: true }
 );

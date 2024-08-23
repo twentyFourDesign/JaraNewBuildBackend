@@ -41,6 +41,9 @@ const create = asyncErrorHandler(async (req, res) => {
       subTotal: req.body.subTotal,
       multiNightDiscount: req.body.discount,
       clubMemberDiscount: req.body.voucher,
+      multiNightDiscountAvailable: req.body.multiNightDiscount
+        ? req.body.multiNightDiscount
+        : 0,
       vat: req.body.vat,
       totalCost: req.body.totalCost,
     };
@@ -130,6 +133,9 @@ const confirm = asyncErrorHandler(async (req, res) => {
       subTotal: payment.subTotal,
       multiNightDiscount: payment.discount,
       clubMemberDiscount: payment.voucher,
+      multiNightDiscountAvailable: payment.multiNightDiscount
+        ? payment.multiNightDiscount
+        : 0,
       vat: payment.vat,
       totalCost: payment.totalCost,
     };
@@ -187,6 +193,9 @@ const cancel = asyncErrorHandler(async (req, res) => {
       subTotal: payment.subTotal,
       multiNightDiscount: payment.discount,
       clubMemberDiscount: payment.voucher,
+      multiNightDiscountAvailable: payment.multiNightDiscount
+        ? payment.multiNightDiscount
+        : 0,
       vat: payment.vat,
       totalCost: payment.totalCost,
     };
