@@ -2,11 +2,11 @@ const {
   asyncErrorHandler,
   ErrorResponse,
 } = require("../middlewares/error/error");
-const { drinkModel } = require("../models");
+const domesticStaffModel = require("../models/domesticStaff.schema");
 const { statusCode } = require("../utils/statusCode");
 
 const create = asyncErrorHandler(async (req, res) => {
-  let createDaypass = await drinkModel.create(req.body);
+  let createDaypass = await domesticStaffModel.create(req.body);
   if (createDaypass) {
     res.status(statusCode.accepted).json(createDaypass);
   } else {
@@ -16,12 +16,12 @@ const create = asyncErrorHandler(async (req, res) => {
 
 const update = asyncErrorHandler(async (req, res) => {
   let { title, price } = req.body;
-  let findMassage = await drinkModel.findById(req.params.id);
+  let findMassage = await domesticStaffModel.findById(req.params.id);
   let updatedbody = {
     title: title ? title : findMassage.title,
     price: price ? price : findMassage.price,
   };
-  let updateData = await drinkModel.findByIdAndUpdate(
+  let updateData = await domesticStaffModel.findByIdAndUpdate(
     req.params.id,
     updatedbody
   );
@@ -33,7 +33,7 @@ const update = asyncErrorHandler(async (req, res) => {
 });
 
 const getAll = asyncErrorHandler(async (req, res) => {
-  let allDaypass = await drinkModel.find({});
+  let allDaypass = await domesticStaffModel.find({});
   if (allDaypass.length > 0) {
     res.status(statusCode.accepted).json(allDaypass);
   } else {
@@ -42,7 +42,7 @@ const getAll = asyncErrorHandler(async (req, res) => {
 });
 
 const del = asyncErrorHandler(async (req, res) => {
-  let allDaypass = await drinkModel.findByIdAndDelete(req.params.id);
+  let allDaypass = await domesticStaffModel.findByIdAndDelete(req.params.id);
   if (allDaypass) {
     res.status(statusCode.accepted).json({ msg: "DELETED" });
   } else {
