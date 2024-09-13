@@ -4,6 +4,12 @@ const { sendEmail } = require("../config/mail.config");
 const { SubRooms } = require("../models/rooms.schema");
 const { voucherModel } = require("../models");
 const { dayPassVouherModel } = require("../models");
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  const formattedDate = date.toLocaleDateString("en-US", options);
+  return formattedDate;
+}
 cron.schedule("0 * * * *", async () => {
   try {
     const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
@@ -30,8 +36,12 @@ cron.schedule("0 * * * *", async () => {
           email: guestDetails.email,
           id: payment.ref,
           bookingType: roomDetails?.selectedRooms?.[0]?.title || "Day Pass",
-          checkIn: roomDetails?.visitDate || roomDetails?.startDate,
-          checkOut: roomDetails?.endDate || roomDetails?.startDate,
+          checkIn: roomDetails?.visitDate
+            ? formatDate(roomDetails?.visitDate)
+            : roomDetails?.startDate,
+          checkOut: roomDetails?.endDate
+            ? formatDate(roomDetails?.endDate)
+            : roomDetails?.startDate,
           numberOfGuests: `${
             roomDetails?.selectedRooms?.[0]?.guestCount?.adults ??
             roomDetails?.adultsCount ??
@@ -60,6 +70,12 @@ cron.schedule("0 * * * *", async () => {
         };
         sendEmail(
           guestDetails.email,
+          "Booking Cancelled",
+          "cancellation",
+          emailContext
+        );
+        sendEmail(
+          "bookings@jarabeachresort.com",
           "Booking Cancelled",
           "cancellation",
           emailContext
