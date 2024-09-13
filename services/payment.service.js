@@ -6,7 +6,12 @@ const { paymentModel } = require("../models");
 const { statusCode } = require("../utils/statusCode");
 const { sendEmail } = require("../config/mail.config");
 const { SubRooms } = require("../models/rooms.schema");
-
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  const formattedDate = date.toLocaleDateString("en-US", options);
+  return formattedDate;
+}
 const create = asyncErrorHandler(async (req, res) => {
   const guestDetails = JSON.parse(req.body.guestDetails);
   const roomDetails = JSON.parse(req.body.roomDetails);
@@ -19,8 +24,12 @@ const create = asyncErrorHandler(async (req, res) => {
       email: guestDetails.email,
       id: req.body.ref,
       bookingType: roomDetails?.selectedRooms?.[0]?.title || "Day Pass",
-      checkIn: roomDetails?.visitDate || roomDetails?.startDate,
-      checkOut: roomDetails?.endDate || roomDetails?.startDate,
+      checkIn: roomDetails?.visitDate
+        ? formatDate(roomDetails?.visitDate)
+        : roomDetails?.startDate,
+      checkOut: roomDetails?.endDate
+        ? formatDate(roomDetails?.endDate)
+        : roomDetails?.startDate,
       numberOfGuests: `${
         roomDetails?.selectedRooms?.[0]?.guestCount?.adults ??
         roomDetails?.adultsCount ??
@@ -54,9 +63,21 @@ const create = asyncErrorHandler(async (req, res) => {
         "pending_payment",
         emailContext
       );
+      sendEmail(
+        "bookings@jarabeachresort.com",
+        "Booking Pending",
+        "pending_payment",
+        emailContext
+      );
     } else if (req.body.status === "Success") {
       sendEmail(
         guestDetails.email,
+        "Booking Confirmed",
+        "confirmation",
+        emailContext
+      );
+      sendEmail(
+        "bookings@jarabeachresort.com",
         "Booking Confirmed",
         "confirmation",
         emailContext
@@ -111,8 +132,12 @@ const confirm = asyncErrorHandler(async (req, res) => {
       email: guestDetails.email,
       id: payment.ref,
       bookingType: roomDetails?.selectedRooms?.[0]?.title || "Day Pass",
-      checkIn: roomDetails?.visitDate || roomDetails?.startDate,
-      checkOut: roomDetails?.endDate || roomDetails?.startDate,
+      checkIn: roomDetails?.visitDate
+        ? formatDate(roomDetails?.visitDate)
+        : roomDetails?.startDate,
+      checkOut: roomDetails?.endDate
+        ? formatDate(roomDetails?.endDate)
+        : roomDetails?.startDate,
       numberOfGuests: `${
         roomDetails?.selectedRooms?.[0]?.guestCount?.adults ??
         roomDetails?.adultsCount ??
@@ -145,6 +170,12 @@ const confirm = asyncErrorHandler(async (req, res) => {
       "confirmation",
       emailContext
     );
+    sendEmail(
+      "bookings@jarabeachresort.com",
+      "Booking Confirmed",
+      "confirmation",
+      emailContext
+    );
   } else {
     throw new ErrorResponse("Payment Not Found", 404);
   }
@@ -171,8 +202,12 @@ const cancel = asyncErrorHandler(async (req, res) => {
       email: guestDetails.email,
       id: payment.ref,
       bookingType: roomDetails?.selectedRooms?.[0]?.title || "Day Pass",
-      checkIn: roomDetails?.visitDate || roomDetails?.startDate,
-      checkOut: roomDetails?.endDate || roomDetails?.startDate,
+      checkIn: roomDetails?.visitDate
+        ? formatDate(roomDetails?.visitDate)
+        : roomDetails?.startDate,
+      checkOut: roomDetails?.endDate
+        ? formatDate(roomDetails?.endDate)
+        : roomDetails?.startDate,
       numberOfGuests: `${
         roomDetails?.selectedRooms?.[0]?.guestCount?.adults ??
         roomDetails?.adultsCount ??
@@ -201,6 +236,12 @@ const cancel = asyncErrorHandler(async (req, res) => {
     };
     sendEmail(
       guestDetails.email,
+      "Booking Cancelled",
+      "cancellation",
+      emailContext
+    );
+    sendEmail(
+      "bookings@jarabeachresort.com",
       "Booking Cancelled",
       "cancellation",
       emailContext

@@ -28,6 +28,7 @@ const roomDecorationRoute = require("./roomDecoration.router");
 const holidayRoute = require("./holiday.router");
 const blockedDaypass = require("./blockedDaypass.router");
 const disableRoute = require("./disable.router");
+const seasonalRoute = require("./seasonal.router");
 
 const mainRoomRoute = require("./mainRoom.router");
 
@@ -61,7 +62,7 @@ allRoutes.use("/roomDecoration", roomDecorationRoute);
 allRoutes.use("/holiday", holidayRoute);
 allRoutes.use("/block/booking", blockedDaypass);
 allRoutes.use("/disable", disableRoute);
-
+allRoutes.use("/seasonal", seasonalRoute);
 allRoutes.use("/main/rooms", mainRoomRoute);
 
 module.exports = { allRoutes };
