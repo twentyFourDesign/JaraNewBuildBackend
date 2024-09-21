@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -113,5 +113,223 @@
     </div>
     </div>
     
+  </body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Booking Confirmation</title>
+    <style>
+      body,
+      html {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        border: 1px solid #ccc;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .header {
+        background-color: rgb(121, 184, 92); /* Header color */
+        color: #fff;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .header img {
+        width: 120px;
+        height: auto;
+      }
+      .header h1 {
+        margin: 0;
+        font-size: 24px;
+      }
+      .hero-image {
+        width: 100%;
+        height: auto;
+      }
+      .content {
+        padding: 20px;
+        height: auto;
+      }
+      .booking-details {
+        background-color: #f4f4f4;
+        padding: 15px;
+        margin-top: 20px;
+      }
+      .booking-details h2 {
+        color: #0000ff;
+        margin-top: 0;
+      }
+      .booking-details table {
+        width: 100%;
+      }
+      .booking-details td {
+        padding: 5px 0;
+      }
+      .features {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        align-items: center;
+      }
+      .feature {
+        flex: 1;
+        text-align: start;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+      }
+      .feature img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+      }
+      .feature h3 {
+        font-size: 14px;
+        margin: 10px 0;
+      }
+      .feature p {
+        font-size: 12px;
+        margin-bottom: 10px;
+      }
+      .button {
+        background-color: white;
+        color: #0000ff;
+        border: 1px solid #0000ff;
+        padding: 5px 10px;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 12px;
+        text-align: center;
+      }
+      .footer {
+        background-color: #ff4136;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <img src="../uploads/jarabeachlogo.png" alt="Jara Beach Resort Logo" />
+        <h1>Your Booking Confirmed</h1>
+      </div>
+      <img src="../uploads/banner.jpeg" alt="" class="hero-image" />
+      <div class="content">
+        <p>Dear {{name}}, {{email}},</p>
+        <p>We are pleased to confirm your booking #{{id}}.</p>
+        <div class="booking-details">
+          <h2>BOOKING DETAILS</h2>
+          <table>
+            <tr>
+              <td><strong>Booking Type:</strong></td>
+              <td>{{bookingType}}</td>
+            </tr>
+            <tr>
+              <td><strong>Check In:</strong></td>
+              <td>{{checkIn}}</td>
+            </tr>
+            <tr>
+              <td><strong>Check Out:</strong></td>
+              <td>{{checkOut}}</td>
+            </tr>
+            <tr>
+              <td><strong>Number of Guests:</strong></td>
+              <td>{{numberOfGuests}}</td>
+            </tr>
+            <tr>
+              <td><strong>Number of Nights:</strong></td>
+              <td>{{numberOfNights}}</td>
+            </tr>
+            <tr>
+              <td><strong>Sub Total:</strong></td>
+              <td>₦{{subTotal}}</td>
+            </tr>
+            <tr>
+              <td><strong>Multi-night discount applied:</strong></td>
+              <td>₦{{multiNightDiscount}}</td>
+            </tr>
+
+            <tr>
+              <td><strong>VAT and Consumption Tax (12.5%):</strong></td>
+              <td>₦{{vat}}</td>
+            </tr>
+            <tr>
+              <td><strong>Total Cost (PAYABLE):</strong></td>
+              <td>₦{{totalCost}}</td>
+            </tr>
+          </table>
+        </div>
+        <p>
+          Thank you for booking with Jara Beach Resort. If you require any
+          assistance please email
+          <a href="mailto:bookings@jarabeachresort.com"
+            >bookings@jarabeachresort.com</a
+          >
+          or call +234 908 798 1605, +234 708 067 1160 (call centre) or Whatsapp
+          (text only) +234 916 191 4477 (text only).
+        </p>
+        <div class="features">
+          <div class="feature">
+            <img src="../uploads/email1.jpeg" alt="Food" />
+            <h3>NIGERIA'S PREMIER AWARD-WINNING</h3>
+            <p>
+              Nigeria's Premier Award-Winning, Family Run, All-Inclusive (food
+              and drink) Beach Experience.
+            </p>
+            <a href="https://booking.jarabeachresort.com/new/" class="button"
+              >READ MORE</a
+            >
+          </div>
+          <div class="feature">
+            <img src="../uploads/email2.jpeg" alt="Sunset" />
+            <h3>EXCLUSIVE & SERENE ENVIRONMENT</h3>
+            <p>
+              Open to Pre-Booked (paid) Visitors Only - No Walk-Ins. 17 Stunning
+              En-Suite
+              <a href="https://booking.jarabeachresort.com/new/overnight/guest"
+                >Rooms</a
+              >
+              and
+              <a
+                href="https://booking.jarabeachresort.com/new/daypass/guest"
+              ></a
+              >Day Pass Visits.
+            </p>
+            <a href="https://booking.jarabeachresort.com/new/" class="button"
+              >READ MORE</a
+            >
+          </div>
+          <div class="feature">
+            <img src="../uploads/teams.jpeg" alt="Activities" />
+            <h3>ACTIVITIES & MEALS INCLUSIVE</h3>
+            <p>
+              Three full meals (and snacks) await our overnight guests; a fusion
+              of international favourites...
+            </p>
+            <a href="https://booking.jarabeachresort.com/new/" class="button"
+              >READ MORE</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        ADDRESS: Museyo Beach, Eleko, Lotu Street, Off Lekki Free Trade Zone
+        Road, 105101
+      </div>
+    </div>
   </body>
 </html>
