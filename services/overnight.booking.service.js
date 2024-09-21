@@ -10,7 +10,7 @@ const createBooking = asyncErrorHandler(async (req, res) => {
   roomDetails = JSON.parse(roomDetails);
   const file = req.file;
   const fileUrl = file
-    ? `${req.protocol}://${req.get("host")}/uploads/${file.filename}`
+    ? `${process.env.SERVER_BASEURL}/uploads/${file.filename}`
     : null;
   const updatedGuestDetails = {
     ...guestDetails,
