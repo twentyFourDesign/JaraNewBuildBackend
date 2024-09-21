@@ -4,164 +4,101 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Booking Confirmation</title>
-    <style>
-      body,
-      html {
-        font-family: Arial, sans-serif;
-        line-height: 1.6;
-        color: #333;
-        margin: 0;
-        padding: 0;
-      }
-      .container {
+  </head>
+  <body
+    style="
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    "
+  >
+    <div
+      class="container"
+      style="
         max-width: 600px;
         margin: 0 auto;
         background-color: #ffffff;
         border: 1px solid #ccc;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      }
-      .header {
-        background-color: rgb(121, 184, 92); /* Header color */
-        color: #fff;
-        padding: 10px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 40px;
-      }
-      .header img {
-        width: 120px;
-        height: auto;
-      }
-      .header h1 {
-        margin: 0;
-        font-size: 24px;
-      }
-      .hero-image {
-        width: 100%;
-        height: auto;
-      }
-      .content {
-        padding: 20px;
-        height: auto;
-      }
-      .booking-details {
-        background-color: #f4f4f4;
-        padding: 15px;
-        margin-top: 20px;
-      }
-      .booking-details h2 {
-        color: #0000ff;
-        margin-top: 0;
-      }
-      .booking-details table {
-        width: 100%;
-      }
-      .booking-details td {
-        padding: 5px 0;
-      }
-      .features {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
-        align-items: center;
-        flex-wrap: wrap;
-      }
-      .feature {
-        flex: 1;
-        text-align: start;
-        padding: 10px;
-        display: flex;
-        flex-direction: column;
-      }
-      .feature img {
-        width: 100%;
-        height: 150px;
-        object-fit: cover;
-      }
-      .feature h3 {
-        font-size: 14px;
-        margin: 10px 0;
-      }
-      .feature p {
-        font-size: 12px;
-        margin-bottom: 10px;
-      }
-      .button {
-        background-color: white;
-        color: #0000ff;
-        border: 1px solid #0000ff;
-        padding: 5px 10px;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 12px;
-        text-align: center;
-      }
-      .footer {
-        background-color: #ff4136;
-        color: white;
-        padding: 10px;
-        text-align: center;
-        font-size: 12px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="header">
+      "
+    >
+      <div
+        class="header"
+        style="
+          background-color: rgb(121, 184, 92);
+          color: #fff;
+          padding: 10px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 40px;
+        "
+      >
         <img
           src="https://github.com/twentyFourDesign/JaraNewBuildBackend/blob/main/uploads/jarabeachlogo.png?raw=true"
           alt="Jara Beach Resort Logo"
+          style="width: 120px; height: auto"
         />
-        <h1>Your Booking Confirmed</h1>
+        <h1 style="margin: 0; font-size: 24px">Your Booking Confirmed</h1>
       </div>
       <img
         src="https://github.com/twentyFourDesign/JaraNewBuildBackend/blob/main/uploads/banner.jpeg?raw=true"
         alt=""
         class="hero-image"
+        style="width: 100%; height: auto"
       />
-      <div class="content">
+      <div class="content" style="padding: 20px">
         <p>Dear {{name}}, {{email}},</p>
         <p>We are pleased to confirm your booking #{{id}}.</p>
-        <div class="booking-details">
-          <h2>BOOKING DETAILS</h2>
-          <table>
+        <div
+          class="booking-details"
+          style="background-color: #f4f4f4; padding: 15px; margin-top: 20px"
+        >
+          <h2 style="color: #0000ff; margin-top: 0">BOOKING DETAILS</h2>
+          <table style="width: 100%">
             <tr>
-              <td><strong>Booking Type:</strong></td>
-              <td>{{bookingType}}</td>
+              <td style="padding: 5px 0"><strong>Booking Type:</strong></td>
+              <td style="padding: 5px 0">{{bookingType}}</td>
             </tr>
             <tr>
-              <td><strong>Check In:</strong></td>
-              <td>{{checkIn}}</td>
+              <td style="padding: 5px 0"><strong>Check In:</strong></td>
+              <td style="padding: 5px 0">{{checkIn}}</td>
             </tr>
             <tr>
-              <td><strong>Check Out:</strong></td>
-              <td>{{checkOut}}</td>
+              <td style="padding: 5px 0"><strong>Check Out:</strong></td>
+              <td style="padding: 5px 0">{{checkOut}}</td>
             </tr>
             <tr>
-              <td><strong>Number of Guests:</strong></td>
-              <td>{{numberOfGuests}}</td>
+              <td style="padding: 5px 0"><strong>Number of Guests:</strong></td>
+              <td style="padding: 5px 0">{{numberOfGuests}}</td>
             </tr>
             <tr>
-              <td><strong>Number of Nights:</strong></td>
-              <td>{{numberOfNights}}</td>
+              <td style="padding: 5px 0"><strong>Number of Nights:</strong></td>
+              <td style="padding: 5px 0">{{numberOfNights}}</td>
             </tr>
             <tr>
-              <td><strong>Sub Total:</strong></td>
-              <td>₦{{subTotal}}</td>
+              <td style="padding: 5px 0"><strong>Sub Total:</strong></td>
+              <td style="padding: 5px 0">₦{{subTotal}}</td>
             </tr>
             <tr>
-              <td><strong>Multi-night discount applied:</strong></td>
-              <td>₦{{multiNightDiscount}}</td>
-            </tr>
-
-            <tr>
-              <td><strong>VAT and Consumption Tax (12.5%):</strong></td>
-              <td>₦{{vat}}</td>
+              <td style="padding: 5px 0">
+                <strong>Multi-night discount applied:</strong>
+              </td>
+              <td style="padding: 5px 0">₦{{multiNightDiscount}}</td>
             </tr>
             <tr>
-              <td><strong>Total Cost (PAYABLE):</strong></td>
-              <td>₦{{totalCost}}</td>
+              <td style="padding: 5px 0">
+                <strong>VAT and Consumption Tax (12.5%):</strong>
+              </td>
+              <td style="padding: 5px 0">₦{{vat}}</td>
+            </tr>
+            <tr>
+              <td style="padding: 5px 0">
+                <strong>Total Cost (PAYABLE):</strong>
+              </td>
+              <td style="padding: 5px 0">₦{{totalCost}}</td>
             </tr>
           </table>
         </div>
@@ -175,59 +112,138 @@
           (text only) +234 916 191 4477 (text only).
         </p>
       </div>
-      <div class="features">
-        <div class="feature">
-          <img
-            src="https://github.com/twentyFourDesign/JaraNewBuildBackend/blob/main/uploads/email1.jpeg?raw=true"
-            alt="Food"
-          />
-          <h3>NIGERIA'S PREMIER AWARD-WINNING</h3>
-          <p>
-            Nigeria's Premier Award-Winning, Family Run, All-Inclusive (food and
-            drink) Beach Experience.
-          </p>
-          <a href="https://booking.jarabeachresort.com/new/" class="button"
-            >READ MORE</a
-          >
-        </div>
-        <div class="feature">
-          <img
-            src="https://github.com/twentyFourDesign/JaraNewBuildBackend/blob/main/uploads/email2.jpeg?raw=true"
-            alt="Sunset"
-          />
-          <h3>EXCLUSIVE & SERENE ENVIRONMENT</h3>
-          <p>
-            Open to Pre-Booked (paid) Visitors Only - No Walk-Ins. 17 Stunning
-            En-Suite
-            <a href="https://booking.jarabeachresort.com/new/overnight/guest"
-              >Rooms</a
+      <table
+        width="100%"
+        cellpadding="0"
+        cellspacing="0"
+        border="0"
+        style="margin-top: 20px"
+      >
+        <tr>
+          <td width="33%" style="padding: 10px">
+            <img
+              src="https://github.com/twentyFourDesign/JaraNewBuildBackend/blob/main/uploads/email1.jpeg?raw=true"
+              alt="Food"
+              style="
+                width: 100%;
+                height: 150px;
+                object-fit: cover;
+                display: block;
+              "
+            />
+            <h3 style="font-size: 14px; margin: 10px 0; text-align: left">
+              NIGERIA'S PREMIER AWARD-WINNING
+            </h3>
+            <p style="font-size: 12px; margin-bottom: 10px; text-align: left">
+              Nigeria's Premier Award-Winning, Family Run, All-Inclusive (food
+              and drink) Beach Experience.
+            </p>
+            <a
+              href="https://booking.jarabeachresort.com/new/"
+              style="
+                background-color: white;
+                color: #0000ff;
+                border: 1px solid #0000ff;
+                padding: 5px 10px;
+                text-decoration: none;
+                font-size: 12px;
+                text-align: center;
+                display: inline-block;
+                width: 90%;
+              "
+              >READ MORE</a
             >
-            and
-            <a href="https://booking.jarabeachresort.com/new/daypass/guest"
-              >Day Pass</a
+          </td>
+
+          <td width="33%" style="padding: 10px">
+            <img
+              src="https://github.com/twentyFourDesign/JaraNewBuildBackend/blob/main/uploads/email2.jpeg?raw=true"
+              alt="Sunset"
+              style="
+                width: 100%;
+                height: 150px;
+                object-fit: cover;
+                display: block;
+              "
+            />
+            <h3 style="font-size: 14px; margin: 10px 0; text-align: left">
+              EXCLUSIVE & SERENE ENVIRONMENT
+            </h3>
+            <p style="font-size: 12px; margin-bottom: 10px; text-align: left">
+              Open to Pre-Booked (paid) Visitors Only - No Walk-Ins. 17 Stunning
+              En-Suite
+              <a href="https://booking.jarabeachresort.com/new/overnight/guest"
+                >Rooms</a
+              >
+              and
+              <a href="https://booking.jarabeachresort.com/new/daypass/guest"
+                >Day Pass</a
+              >
+              Visits.
+            </p>
+            <a
+              href="https://booking.jarabeachresort.com/new/"
+              style="
+                background-color: white;
+                color: #0000ff;
+                border: 1px solid #0000ff;
+                padding: 5px 10px;
+                text-decoration: none;
+                font-size: 12px;
+                text-align: center;
+                display: inline-block;
+                width: 90%;
+              "
+              >READ MORE</a
             >
-            Visits.
-          </p>
-          <a href="https://booking.jarabeachresort.com/new/" class="button"
-            >READ MORE</a
-          >
-        </div>
-        <div class="feature">
-          <img
-            src="https://github.com/twentyFourDesign/JaraNewBuildBackend/blob/main/uploads/teams.jpeg?raw=true"
-            alt="Activities"
-          />
-          <h3>ACTIVITIES & MEALS INCLUSIVE</h3>
-          <p>
-            Three full meals (and snacks) await our overnight guests; a fusion
-            of international favourites...
-          </p>
-          <a href="https://booking.jarabeachresort.com/new/" class="button"
-            >READ MORE</a
-          >
-        </div>
-      </div>
-      <div class="footer">
+          </td>
+
+          <td width="33%" style="padding: 10px">
+            <img
+              src="https://github.com/twentyFourDesign/JaraNewBuildBackend/blob/main/uploads/teams.jpeg?raw=true"
+              alt="Activities"
+              style="
+                width: 100%;
+                height: 150px;
+                object-fit: cover;
+                display: block;
+              "
+            />
+            <h3 style="font-size: 14px; margin: 10px 0; text-align: left">
+              ACTIVITIES & MEALS INCLUSIVE
+            </h3>
+            <p style="font-size: 12px; margin-bottom: 10px; text-align: left">
+              Three full meals (and snacks) await our overnight guests; a fusion
+              of international favourites...
+            </p>
+            <a
+              href="https://booking.jarabeachresort.com/new/"
+              style="
+                background-color: white;
+                color: #0000ff;
+                border: 1px solid #0000ff;
+                padding: 5px 10px;
+                text-decoration: none;
+                font-size: 12px;
+                text-align: center;
+                display: inline-block;
+                width: 90%;
+              "
+              >READ MORE</a
+            >
+          </td>
+        </tr>
+      </table>
+      <div
+        class="footer"
+        style="
+          background-color: #ff4136;
+          color: white;
+          padding: 10px;
+          text-align: center;
+          font-size: 12px;
+        "
+      >
         ADDRESS: Museyo Beach, Eleko, Lotu Street, Off Lekki Free Trade Zone
         Road, 105101
       </div>
