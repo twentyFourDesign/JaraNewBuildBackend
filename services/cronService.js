@@ -10,7 +10,7 @@ function formatDate(dateString) {
   const formattedDate = date.toLocaleDateString("en-US", options);
   return formattedDate;
 }
-cron.schedule("0 * * * *", async () => {
+cron.schedule("* * * * *", async () => {
   try {
     const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
     const pendingPayments = await paymentModel.find({
