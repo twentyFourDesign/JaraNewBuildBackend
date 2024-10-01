@@ -23,7 +23,9 @@ const create = asyncErrorHandler(async (req, res) => {
       name: req.body.name,
       email: guestDetails.email,
       id: req.body.ref,
-      bookingType: roomDetails?.selectedRooms?.[0]?.title || "Day Pass",
+      bookingType:
+        roomDetails?.selectedRooms?.map((room) => `${room.title}`) ||
+        "Day Pass",
       checkIn: roomDetails?.visitDate
         ? formatDate(roomDetails?.visitDate)
         : roomDetails?.startDate,
@@ -131,7 +133,9 @@ const confirm = asyncErrorHandler(async (req, res) => {
       name: payment.name,
       email: guestDetails.email,
       id: payment.ref,
-      bookingType: roomDetails?.selectedRooms?.[0]?.title || "Day Pass",
+      bookingType:
+        roomDetails?.selectedRooms?.map((room) => `${room.title}`) ||
+        "Day Pass",
       checkIn: roomDetails?.visitDate
         ? formatDate(roomDetails?.visitDate)
         : roomDetails?.startDate,
@@ -201,7 +205,9 @@ const cancel = asyncErrorHandler(async (req, res) => {
       name: payment.name,
       email: guestDetails.email,
       id: payment.ref,
-      bookingType: roomDetails?.selectedRooms?.[0]?.title || "Day Pass",
+      bookingType:
+        roomDetails?.selectedRooms?.map((room) => `${room.title}`) ||
+        "Day Pass",
       checkIn: roomDetails?.visitDate
         ? formatDate(roomDetails?.visitDate)
         : roomDetails?.startDate,
@@ -250,4 +256,91 @@ const cancel = asyncErrorHandler(async (req, res) => {
     throw new ErrorResponse("Booking Not Found", 404);
   }
 });
-module.exports = { create, getAll, getByBookingId, getSingle, confirm, cancel };
+const updatePayment = asyncErrorHandler(async (req, res) => {
+  const { ref } = req.params;
+  const payment = await paymentModel.findOne({ ref });
+  if (!payment) {
+    throw new ErrorResponse("Payment not found", 404);
+  }
+
+  Object.assign(payment, req.body);
+
+  await payment.save();
+  res.status(200).json(payment);
+
+  const roomDetails = JSON.parse(payment.roomDetails);
+  const guestDetails = JSON.parse(payment.guestDetails);
+  const emailContext = {
+    name: payment.name,
+    email: guestDetails.email,
+    id: payment.ref,
+    bookingType:
+      roomDetails?.selectedRooms?.map((room) => `${room.title}`) || "Day Pass",
+    checkIn: roomDetails?.visitDate
+      ? formatDate(roomDetails?.visitDate)
+      : roomDetails?.startDate,
+    checkOut: roomDetails?.endDate
+      ? formatDate(roomDetails?.endDate)
+      : roomDetails?.startDate,
+    numberOfGuests: `${
+      roomDetails?.selectedRooms?.[0]?.guestCount?.adults ??
+      roomDetails?.adultsCount ??
+      0
+    } Adults, ${
+      roomDetails?.selectedRooms?.[0]?.guestCount?.children ??
+      roomDetails?.childrenCount ??
+      0
+    } Children`,
+    numberOfNights: roomDetails?.visitDate
+      ? Math.round(
+          (new Date(roomDetails?.endDate) - new Date(roomDetails?.visitDate)) /
+            (1000 * 60 * 60 * 24) +
+            1
+        )
+      : "Day Pass",
+    subTotal: payment.subTotal,
+    multiNightDiscount: payment.discount,
+    clubMemberDiscount: payment.voucher,
+    multiNightDiscountAvailable: payment.multiNightDiscount
+      ? payment.multiNightDiscount
+      : 0,
+    vat: payment.vat,
+    totalCost: payment.totalCost,
+  };
+  if (req.body.status === "Pending") {
+    sendEmail(
+      guestDetails.email,
+      "Booking Updated",
+      "manage_pending",
+      emailContext
+    );
+    sendEmail(
+      "bookings@jarabeachresort.com",
+      "Booking Updated",
+      "manage_pending",
+      emailContext
+    );
+  } else if (req.body.status === "Success") {
+    sendEmail(
+      guestDetails.email,
+      "Booking Updated",
+      "manage_success",
+      emailContext
+    );
+    sendEmail(
+      "bookings@jarabeachresort.com",
+      "Booking Updated",
+      "manage_success",
+      emailContext
+    );
+  }
+});
+module.exports = {
+  create,
+  getAll,
+  getByBookingId,
+  getSingle,
+  confirm,
+  cancel,
+  updatePayment,
+};
