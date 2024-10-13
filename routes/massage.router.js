@@ -1,11 +1,15 @@
-const {create,getAll, del,update} = require('../services/massage.service')
+const {
+  createMassage,
+  getAll,
+  del,
+  update,
+} = require("../services/massage.service");
 
-const router = require('express').Router()
+const router = require("express").Router();
 
+router.post("/create", createMassage);
+router.put("/update/:id", update);
+router.get("/get", getAll);
+router.delete("/delete/:id", del);
 
-router.post("/create",create)
-router.put("/update/:id",update)
-router.get("/get",getAll)
-router.delete("/delete/:id",del)
-
-module.exports = router
+module.exports = router;

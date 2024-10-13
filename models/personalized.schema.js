@@ -9,6 +9,10 @@ const personalizedSchema = mongoose.Schema(
     sunsetPicnic: { type: String, required: true },
     DIYPainting: { type: String, required: true },
     TieDye: { type: String, required: true },
+    // type: {
+    //   type: String,
+    //   default: "personalized",
+    // },
   },
   { timestamps: true }
 );
