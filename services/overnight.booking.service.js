@@ -38,4 +38,35 @@ const getBookingByRef = asyncErrorHandler(async (req, res) => {
   res.status(200).json(booking);
 });
 
-module.exports = { createBooking, getAllBooking, getBookingByRef };
+const updateBooking = asyncErrorHandler(async (req, res) => {
+  const { ref } = req.params;
+  let { guestCount, guestDetails, roomDetails } = req.body;
+  guestDetails = JSON.parse(guestDetails);
+  roomDetails = JSON.parse(roomDetails);
+  const file = req.file;
+  const fileUrl = file
+    ? `${process.env.SERVER_BASEURL}/uploads/${file.filename}`
+    : null;
+  const updatedGuestDetails = {
+    ...guestDetails,
+    photo: fileUrl,
+  };
+
+  let booking = await overnightBooking.findOne({ _id: ref });
+  if (!booking) {
+    throw new ErrorResponse("Booking not found", 404);
+  }
+
+  booking.totalGuest = guestCount;
+  booking.bookingDetails = roomDetails;
+  booking.guestDetails = updatedGuestDetails;
+
+  await booking.save();
+  res.status(200).json(booking);
+});
+module.exports = {
+  createBooking,
+  getAllBooking,
+  getBookingByRef,
+  updateBooking,
+};

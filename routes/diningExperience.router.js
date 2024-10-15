@@ -1,13 +1,13 @@
 const {
-  createMassage,
+  create,
   getAll,
   del,
   update,
-} = require("../services/massage.service");
+} = require("../services/diningExperience.service");
 
 const router = require("express").Router();
 
-router.post("/create", createMassage);
+router.post("/create", create);
 router.put("/update/:id", update);
 router.get("/get", getAll);
 router.delete("/delete/:id", del);

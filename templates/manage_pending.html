@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Booking Cancelled - Jara Beach Resort</title>
+    <title>Booking Confirmation</title>
   </head>
   <body
     style="
@@ -15,6 +15,7 @@
     "
   >
     <div
+      class="container"
       style="
         max-width: 600px;
         margin: 0 auto;
@@ -23,30 +24,10 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       "
     >
-      <!-- <div
-        style="
-          background-color: rgb(139, 0, 0);
-          color: #fff;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 40px;
-          text-align: right;
-          padding: 5px;
-          font-size: 12px;
-        "
-      >
-        <img
-          src="https://github.com/twentyFourDesign/JaraNewBuildBackend/blob/main/uploads/jarabeachlogo.png?raw=true"
-          alt="Jara Beach Resort Logo"
-          style="width: 120px; height: auto"
-        />
-        <h1 style="margin: 0; font-size: 18px">BOOKING CANCELLED</h1>
-      </div> -->
       <table
         style="
           width: 100%;
-          background-color: rgb(139, 0, 0);
+          background-color: rgb(255, 191, 0);
           color: #fff;
           text-align: right;
           padding: 5px;
@@ -62,66 +43,90 @@
             />
           </td>
           <td style="padding: 5px; text-align: right">
-            <h1 style="margin: 0; font-size: 18px">BOOKING CANCELLED!</h1>
+            <h1 style="margin: 0; font-size: 18px">
+              BOOKING UPDATED! PAYMENT REQUIRED.
+            </h1>
           </td>
         </tr>
       </table>
       <img
         src="https://github.com/twentyFourDesign/JaraNewBuildBackend/blob/main/uploads/banner.png?raw=true"
         alt=""
+        class="hero-image"
         style="width: 100%; height: auto"
       />
-      <div style="padding: 20px; height: auto">
+      <div class="content" style="padding: 20px">
         <p>Dear {{name}}, {{email}},</p>
         <p>
-          This is to inform you that your booking #{{id}} has been cancelled.
+          your booking #{{id}} has been updated successfully.Payment required to
+          confirm your visit. Please then reply to this email with your proof of
+          payment.
         </p>
-        <div style="background-color: #f4f4f4; padding: 15px; margin-top: 20px">
+        <div
+          class="booking-details"
+          style="background-color: #f4f4f4; padding: 15px; margin-top: 20px"
+        >
           <h2 style="color: #0000ff; margin-top: 0">BOOKING DETAILS</h2>
           <table style="width: 100%">
             <tr>
-              <td><strong>Rooms:</strong></td>
-              <td>{{bookingType}}</td>
+              <td style="padding: 5px 0"><strong>Rooms:</strong></td>
+              <td style="padding: 5px 0">{{bookingType}}</td>
             </tr>
             <tr>
-              <td><strong>Check In:</strong></td>
-              <td>{{checkIn}}</td>
+              <td style="padding: 5px 0"><strong>Check In:</strong></td>
+              <td style="padding: 5px 0">{{checkIn}}</td>
             </tr>
             <tr>
-              <td><strong>Check Out:</strong></td>
-              <td>{{checkOut}}</td>
+              <td style="padding: 5px 0"><strong>Check Out:</strong></td>
+              <td style="padding: 5px 0">{{checkOut}}</td>
             </tr>
             <tr>
-              <td><strong>Number of Guests:</strong></td>
-              <td>{{numberOfGuests}}</td>
+              <td style="padding: 5px 0"><strong>Number of Guests:</strong></td>
+              <td style="padding: 5px 0">{{numberOfGuests}}</td>
             </tr>
             <tr>
-              <td><strong>Number of Nights:</strong></td>
-              <td>{{numberOfNights}}</td>
+              <td style="padding: 5px 0"><strong>Number of Nights:</strong></td>
+              <td style="padding: 5px 0">{{numberOfNights}}</td>
             </tr>
             <tr>
-              <td><strong>Sub Total:</strong></td>
-              <td>₦{{subTotal}}</td>
+              <td style="padding: 5px 0"><strong>Sub Total:</strong></td>
+              <td style="padding: 5px 0">₦{{subTotal}}</td>
             </tr>
             <tr>
-              <td><strong>Multi-night discount applied:</strong></td>
-              <td>₦{{multiNightDiscount}}</td>
-            </tr>
-
-            <tr>
-              <td><strong>VAT and Consumption Tax (12.5%):</strong></td>
-              <td>₦{{vat}}</td>
+              <td style="padding: 5px 0">
+                <strong>Multi-night discount applied:</strong>
+              </td>
+              <td style="padding: 5px 0">₦{{multiNightDiscount}}</td>
             </tr>
             <tr>
-              <td><strong>Total Cost (PAYABLE):</strong></td>
-              <td>₦{{totalCost}}</td>
+              <td style="padding: 5px 0">
+                <strong>VAT and Consumption Tax (12.5%):</strong>
+              </td>
+              <td style="padding: 5px 0">₦{{vat}}</td>
+            </tr>
+            <tr>
+              <td style="padding: 5px 0">
+                <strong>Total Cost (PAYABLE):</strong>
+              </td>
+              <td style="padding: 5px 0">₦{{totalCost}}</td>
             </tr>
           </table>
         </div>
         <p>
-          Please rebook through the
-          <a href="https://booking.jarabeachresort.com/new/">website</a>. If you
-          require any assistance please email
+          To complete your reservation, kindly make the payment of
+          ₦{{totalCost}} to:
+        </p>
+        <p>LITTLE COMPANY NIGERIA LIMITED</p>
+        <p>Access Bank: <strong>0813609546 </strong></p>
+        <p>Guaranty Trust Bank (GTB): <strong>0504697451</strong></p>
+        <p>
+          Please then reply to this email with your proof of payment. We will
+          hold the reservation for the next 1 hour, if the payment is not
+          received then your reservation will be cancelled.
+        </p>
+        <p>
+          Thank you for booking with Jara Beach Resort. If you require any
+          assistance please email
           <a href="mailto:bookings@jarabeachresort.com"
             >bookings@jarabeachresort.com</a
           >
@@ -252,6 +257,7 @@
         </tr>
       </table>
       <div
+        class="footer"
         style="
           background-color: #ff4136;
           color: white;

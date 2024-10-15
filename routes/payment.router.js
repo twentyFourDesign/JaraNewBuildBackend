@@ -5,6 +5,7 @@ const {
   confirm,
   cancel,
   getByBookingId,
+  updatePayment,
 } = require("../services/payment.service");
 
 const router = require("express").Router();
@@ -15,4 +16,6 @@ router.get("/get/single/:id", getSingle);
 router.get("/get/byBookingId/:id", getByBookingId);
 router.post("/confirm/:ref", confirm);
 router.post("/cancel/:ref", cancel);
+router.put("/update/:ref", updatePayment);
+
 module.exports = router;

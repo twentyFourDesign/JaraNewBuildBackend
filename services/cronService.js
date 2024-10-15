@@ -15,7 +15,7 @@ cron.schedule("* * * * *", async () => {
     const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
     const pendingPayments = await paymentModel.find({
       status: "Pending",
-      createdAt: { $lte: oneHourAgo },
+      updatedAt: { $lte: oneHourAgo },
     });
 
     for (const payment of pendingPayments) {
@@ -35,7 +35,9 @@ cron.schedule("* * * * *", async () => {
           name: payment.name,
           email: guestDetails.email,
           id: payment.ref,
-          bookingType: roomDetails?.selectedRooms?.[0]?.title || "Day Pass",
+          bookingType:
+            roomDetails?.selectedRooms?.map((room) => `${room.title}`) ||
+            "Day Pass",
           checkIn: roomDetails?.visitDate
             ? formatDate(roomDetails?.visitDate)
             : roomDetails?.startDate,
