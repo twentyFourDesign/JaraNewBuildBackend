@@ -3,6 +3,7 @@ const {
   ErrorResponse,
   asyncErrorHandler,
 } = require("../middlewares/error/error");
+const shortid = require("shortid");
 
 const createBooking = asyncErrorHandler(async (req, res) => {
   let { guestCount, guestDetails, roomDetails } = req.body;
@@ -20,8 +21,10 @@ const createBooking = asyncErrorHandler(async (req, res) => {
     totalGuest: guestCount,
     bookingDetails: roomDetails,
     guestDetails: updatedGuestDetails,
+    shortId: shortid.generate(), // Generate a short unique ID
   });
-  res.status(200).json(create);
+
+  res.status(200).json(create); // Send the booking with the short ID
 });
 
 const getAllBooking = asyncErrorHandler(async (req, res) => {
@@ -31,7 +34,10 @@ const getAllBooking = asyncErrorHandler(async (req, res) => {
 
 const getBookingByRef = asyncErrorHandler(async (req, res) => {
   const { ref } = req.params;
-  const booking = await overnightBooking.findOne({ _id: ref });
+
+  // Attempt to find the booking by either _id or shortId
+  const booking = await overnightBooking.findOne({ shortId: ref });
+
   if (!booking) {
     throw new ErrorResponse("Booking not found", 404);
   }
@@ -52,7 +58,9 @@ const updateBooking = asyncErrorHandler(async (req, res) => {
     photo: fileUrl,
   };
 
-  let booking = await overnightBooking.findOne({ _id: ref });
+  let booking = await overnightBooking.findOne(
+    { shortId: ref } // Allow fetching by either _id or shortId
+  );
   if (!booking) {
     throw new ErrorResponse("Booking not found", 404);
   }

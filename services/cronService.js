@@ -10,6 +10,10 @@ function formatDate(dateString) {
   const formattedDate = date.toLocaleDateString("en-US", options);
   return formattedDate;
 }
+const formatPrice = (price) => {
+  const priceNumber = Number(price);
+  return priceNumber.toLocaleString(); // Format the price with commas
+};
 cron.schedule("* * * * *", async () => {
   try {
     const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
@@ -36,7 +40,7 @@ cron.schedule("* * * * *", async () => {
           email: guestDetails.email,
           id: payment.ref,
           bookingType:
-            roomDetails?.selectedRooms?.map((room) => `${room.title}`) ||
+            roomDetails?.selectedRooms?.map((room) => ` ${room.title}`) ||
             "Day Pass",
           checkIn: roomDetails?.visitDate
             ? formatDate(roomDetails?.visitDate)
@@ -61,18 +65,18 @@ cron.schedule("* * * * *", async () => {
                   1
               )
             : "Day Pass",
-          subTotal: payment.subTotal,
-          multiNightDiscount: payment.discount,
+          subTotal: formatPrice(payment.subTotal),
+          multiNightDiscount: payment.discount.toLocaleString(),
           clubMemberDiscount: payment.voucher,
           multiNightDiscountAvailable: payment.multiNightDiscount
             ? payment.multiNightDiscount
             : 0,
-          vat: payment.vat,
-          totalCost: payment.totalCost,
+          vat: formatPrice(payment.vat),
+          totalCost: formatPrice(payment.totalCost),
         };
         sendEmail(
           guestDetails.email,
-          "Booking Cancelled",
+          "Your Booking has been Cancelled",
           "cancellation",
           emailContext
         );

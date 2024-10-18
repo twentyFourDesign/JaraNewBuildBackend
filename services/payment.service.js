@@ -12,6 +12,11 @@ function formatDate(dateString) {
   const formattedDate = date.toLocaleDateString("en-US", options);
   return formattedDate;
 }
+
+const formatPrice = (price) => {
+  const priceNumber = Number(price);
+  return priceNumber.toLocaleString(); // Format the price with commas
+};
 const create = asyncErrorHandler(async (req, res) => {
   const guestDetails = JSON.parse(req.body.guestDetails);
   const roomDetails = JSON.parse(req.body.roomDetails);
@@ -24,7 +29,7 @@ const create = asyncErrorHandler(async (req, res) => {
       email: guestDetails.email,
       id: req.body.ref,
       bookingType:
-        roomDetails?.selectedRooms?.map((room) => `${room.title}`) ||
+        roomDetails?.selectedRooms?.map((room) => ` ${room.title}`) ||
         "Day Pass",
       checkIn: roomDetails?.visitDate
         ? formatDate(roomDetails?.visitDate)
@@ -49,38 +54,38 @@ const create = asyncErrorHandler(async (req, res) => {
               1
           )
         : "Day Pass",
-      subTotal: req.body.subTotal,
-      multiNightDiscount: req.body.discount,
+      subTotal: formatPrice(req.body.subTotal),
+      multiNightDiscount: req.body.discount.toLocaleString(),
       clubMemberDiscount: req.body.voucher,
       multiNightDiscountAvailable: req.body.multiNightDiscount
         ? req.body.multiNightDiscount
         : 0,
-      vat: req.body.vat,
-      totalCost: req.body.totalCost,
+      vat: formatPrice(req.body.vat),
+      totalCost: formatPrice(req.body.totalCost),
     };
     if (req.body.status === "Pending") {
       sendEmail(
         guestDetails.email,
-        "Booking Pending",
+        "Your Booking Is Pending",
         "pending_payment",
         emailContext
       );
       sendEmail(
         "bookings@jarabeachresort.com",
-        "Booking Pending",
+        "New Booking Pending",
         "pending_payment",
         emailContext
       );
     } else if (req.body.status === "Success") {
       sendEmail(
         guestDetails.email,
-        "Booking Confirmed",
+        "Your Booking Is Confirmed",
         "confirmation",
         emailContext
       );
       sendEmail(
         "bookings@jarabeachresort.com",
-        "Booking Confirmed",
+        "New Booking Confirmed",
         "confirmation",
         emailContext
       );
@@ -104,7 +109,7 @@ const getSingle = asyncErrorHandler(async (req, res) => {
   if (daypass) {
     res.status(statusCode.accepted).json(daypass);
   } else {
-    throw new ErrorResponse("No Daypass Booking Found", 404);
+    throw new ErrorResponse("No Payment Found", 404);
   }
 });
 const getByBookingId = asyncErrorHandler(async (req, res) => {
@@ -122,7 +127,7 @@ const confirm = asyncErrorHandler(async (req, res) => {
   const { bank } = req.body;
   let payment = await paymentModel.findOne({ ref });
   if (payment) {
-    payment.status = "Success"; // Update the status to confirmed
+    payment.status = "Success"; // Update the status to confirm
     payment.method = `Bank Transfer ${bank}`;
     await payment.save();
     res.status(statusCode.accepted).json(payment);
@@ -134,7 +139,7 @@ const confirm = asyncErrorHandler(async (req, res) => {
       email: guestDetails.email,
       id: payment.ref,
       bookingType:
-        roomDetails?.selectedRooms?.map((room) => `${room.title}`) ||
+        roomDetails?.selectedRooms?.map((room) => ` ${room.title}`) ||
         "Day Pass",
       checkIn: roomDetails?.visitDate
         ? formatDate(roomDetails?.visitDate)
@@ -159,24 +164,24 @@ const confirm = asyncErrorHandler(async (req, res) => {
               1
           )
         : "Day Pass",
-      subTotal: payment.subTotal,
-      multiNightDiscount: payment.discount,
+      subTotal: formatPrice(payment.subTotal),
+      multiNightDiscount: payment.discount.toLocaleString(),
       clubMemberDiscount: payment.voucher,
       multiNightDiscountAvailable: payment.multiNightDiscount
         ? payment.multiNightDiscount
         : 0,
-      vat: payment.vat,
-      totalCost: payment.totalCost,
+      vat: formatPrice(payment.vat),
+      totalCost: formatPrice(payment.totalCost),
     };
     sendEmail(
       guestDetails.email,
-      "Booking Confirmed",
+      "Your Booking Is Confirmed",
       "confirmation",
       emailContext
     );
     sendEmail(
       "bookings@jarabeachresort.com",
-      "Booking Confirmed",
+      "New Booking Confirmed",
       "confirmation",
       emailContext
     );
@@ -206,7 +211,7 @@ const cancel = asyncErrorHandler(async (req, res) => {
       email: guestDetails.email,
       id: payment.ref,
       bookingType:
-        roomDetails?.selectedRooms?.map((room) => `${room.title}`) ||
+        roomDetails?.selectedRooms?.map((room) => ` ${room.title}`) ||
         "Day Pass",
       checkIn: roomDetails?.visitDate
         ? formatDate(roomDetails?.visitDate)
@@ -231,18 +236,18 @@ const cancel = asyncErrorHandler(async (req, res) => {
               1
           )
         : "Day Pass",
-      subTotal: payment.subTotal,
-      multiNightDiscount: payment.discount,
+      subTotal: formatPrice(payment.subTotal),
+      multiNightDiscount: payment.discount.toLocaleString(),
       clubMemberDiscount: payment.voucher,
       multiNightDiscountAvailable: payment.multiNightDiscount
         ? payment.multiNightDiscount
         : 0,
-      vat: payment.vat,
-      totalCost: payment.totalCost,
+      vat: formatPrice(payment.vat),
+      totalCost: formatPrice(payment.totalCost),
     };
     sendEmail(
       guestDetails.email,
-      "Booking Cancelled",
+      "Your Booking Has Been Cancelled",
       "cancellation",
       emailContext
     );
@@ -275,7 +280,7 @@ const updatePayment = asyncErrorHandler(async (req, res) => {
     email: guestDetails.email,
     id: payment.ref,
     bookingType:
-      roomDetails?.selectedRooms?.map((room) => `${room.title}`) || "Day Pass",
+      roomDetails?.selectedRooms?.map((room) => ` ${room.title}`) || "Day Pass",
     checkIn: roomDetails?.visitDate
       ? formatDate(roomDetails?.visitDate)
       : roomDetails?.startDate,
@@ -298,19 +303,28 @@ const updatePayment = asyncErrorHandler(async (req, res) => {
             1
         )
       : "Day Pass",
-    subTotal: payment.subTotal,
-    multiNightDiscount: payment.discount,
+    subTotal: formatPrice(payment.subTotal),
+    multiNightDiscount: payment.discount.toLocaleString(),
     clubMemberDiscount: payment.voucher,
     multiNightDiscountAvailable: payment.multiNightDiscount
       ? payment.multiNightDiscount
       : 0,
-    vat: payment.vat,
-    totalCost: payment.totalCost,
+    vat: formatPrice(payment.vat),
+    totalCost: formatPrice(payment.totalCost),
+    previousCost: payment.previousCost.toLocaleString(),
+    differenceToPay:
+      payment.previousPaymentStatus == "Pending"
+        ? formatPrice(payment.totalCost)
+        : parseFloat(payment.totalCost) - parseFloat(payment.previousCost) > 0
+        ? (
+            parseFloat(payment.totalCost) - parseFloat(payment.previousCost)
+          ).toLocaleString()
+        : 0,
   };
   if (req.body.status === "Pending") {
     sendEmail(
       guestDetails.email,
-      "Booking Updated",
+      "Your Booking Is Updated",
       "manage_pending",
       emailContext
     );
@@ -323,7 +337,7 @@ const updatePayment = asyncErrorHandler(async (req, res) => {
   } else if (req.body.status === "Success") {
     sendEmail(
       guestDetails.email,
-      "Booking Updated",
+      "Your Booking Is Updated",
       "manage_success",
       emailContext
     );

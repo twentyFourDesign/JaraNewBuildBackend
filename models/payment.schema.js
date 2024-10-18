@@ -15,6 +15,8 @@ const paymentSchema = mongoose.Schema(
     discount: { type: Number },
     voucher: { type: Number },
     multiNightDiscount: { type: Number },
+    previousCost: { type: Number, default: 0 },
+    previousPaymentStatus: { type: String, default: "" },
   },
   { timestamps: true }
 );
