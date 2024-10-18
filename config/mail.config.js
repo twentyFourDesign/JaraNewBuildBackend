@@ -22,7 +22,7 @@ const sendEmail = (to, subject, templateName, replacements) => {
   const htmlToSend = template(replacements);
 
   const mailOptions = {
-    from: process.env.EMAIL_USER,
+    from: `"Jara Beach Resort" <${process.env.EMAIL_USER}>`,
     to,
     subject,
     html: htmlToSend,
